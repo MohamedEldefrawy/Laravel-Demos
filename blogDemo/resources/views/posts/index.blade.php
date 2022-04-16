@@ -19,8 +19,7 @@
         <tbody>
         @foreach ( $posts as $post)
             <tr>
-                <td>
-                {{ $post['id'] }}</th>
+                <td>{{ $post['id'] }}</td>
                 <td>{{ $post['Title'] }}</td>
                 <td>{{ $post['Posted by'] }}</td>
                 <td>{{ $post['Created at'] }}</td>
