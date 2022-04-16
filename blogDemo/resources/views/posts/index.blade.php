@@ -21,11 +21,11 @@
             <tr>
                 <td>{{ $post['id'] }}</td>
                 <td>{{ $post['Title'] }}</td>
-                <td>{{ $post['Posted by'] }}</td>
-                <td>{{ $post['Created at'] }}</td>
+                <td>{{ $post['Name'] }}</td>
+                <td>{{ $post['Created At'] }}</td>
                 <td>
                     <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
-                    <a href="#" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
                     <a href="#" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
