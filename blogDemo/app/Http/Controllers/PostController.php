@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
+
     public function index()
     {
         $posts = [
@@ -22,4 +23,28 @@ class PostController extends Controller
     {
         return view('posts.create');
     }
+
+    public function store()
+    {
+
+    }
+
+    public function edit()
+    {
+        return view('posts.edit');
+    }
+
+    public function show($postId)
+    {
+        $posts = [
+            ["id" => 1, "Title" => "Learn PHP", "Name" => "Mohamed", "Created At" => "15-4-2022", "Description" => "nice", "Email" => "mohamed@gmail.com"],
+            ["id" => 2, "Title" => "Learn JAVA", "Name" => "Ahmed", "Created At" => "10-4-2022", "Description" => "nice", "Email" => "ahmed@gmail.com"],
+            ["id" => 3, "Title" => "Learn C#", "Name" => "Ali", "Created At" => "12-4-2022", "Description" => "nice", "Email" => "ali@gmail.com"],
+            ["id" => 4, "Title" => "Learn NodeJs", "Name" => "omar", "Created At" => "12-3-2021", "Description" => "nice", "Email" => "omar@gmail.com"],
+        ];
+
+        // Eloquent get by ID
+        return view('posts.show', ["post" => $posts[$postId - 1]]);
+    }
+
 }
