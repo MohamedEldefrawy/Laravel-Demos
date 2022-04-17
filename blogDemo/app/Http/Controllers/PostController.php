@@ -41,9 +41,10 @@ class PostController extends Controller
 
     public function edit($postId)
     {
-        $posts = $this->getPosts();
-
-        return view('posts.edit', ['post' => $posts[$postId - 1]]);
+        $post = Post::where('id', $postId)->first();
+//        dd($post->user_id);
+        $users = User::all();
+        return view('posts.edit', ['post' => $post, 'users' => $users]);
     }
 
     public function show($postId)
@@ -58,18 +59,5 @@ class PostController extends Controller
         $posts = $this->getPosts();
         return view('posts.index', ["posts" => $posts]);
     }
-//
-//    /**
-//     * @return array[]
-//     */
-//    public function getPosts(): array
-//    {
-//        return [
-//            ["id" => 1, "Title" => "Learn PHP", "Name" => "Mohamed", "Created At" => "15-4-2022", "Description" => "nice", "Email" => "mohamed@gmail.com"],
-//            ["id" => 2, "Title" => "Learn JAVA", "Name" => "Ahmed", "Created At" => "10-4-2022", "Description" => "nice", "Email" => "ahmed@gmail.com"],
-//            ["id" => 3, "Title" => "Learn C#", "Name" => "Ali", "Created At" => "12-4-2022", "Description" => "nice", "Email" => "ali@gmail.com"],
-//            ["id" => 4, "Title" => "Learn NodeJs", "Name" => "omar", "Created At" => "12-3-2021", "Description" => "nice", "Email" => "omar@gmail.com"],
-//        ];
-//    }
 
 }
