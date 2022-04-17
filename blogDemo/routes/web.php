@@ -25,4 +25,4 @@ Route::get('/posts/edit/{post}', [PostController::class, 'edit'])->name('posts.e
 Route::put('/posts/edit', [PostController::class, 'update'])->name('posts.update');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::delete('/posts/delete/{id}', [PostController::class, 'delete'])->name('posts.delete');
-Route::post('/posts/retrieve/', [PostController::class, 'rollback'])->name('posts.retrieve');
+Route::post('/posts/retrieve/{id}', [PostController::class, 'rollback'])->name('posts.retrieve');

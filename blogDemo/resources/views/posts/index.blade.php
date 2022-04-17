@@ -6,12 +6,6 @@
     <div class="text-center">
         <a href="{{ route('posts.create') }}" class="mt-4 btn btn-success">Create Post</a>
     </div>
-    <form class="align-self-end" method="post" action="{{ route('posts.retrieve') }}">
-        @csrf
-        <input type="submit" class="btn btn-warning"
-               onclick="return confirm('Are you sure?')"
-               value="Rollback">
-    </form>
     <table class="table mt-4">
         <thead>
         <tr>
@@ -24,26 +18,39 @@
         </thead>
         <tbody>
         @foreach ( $posts as $post)
-            <tr>
-                <td>{{ $post->id }}</td>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->user->name }}</td>
-                <td>{{ $post->created_at }}</td>
-                <td>
-                    <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
-                    <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
+            @if(!$post->trashed())
+                <tr>
+                    <td>{{ $post->id }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->user->name }}</td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>
+                        <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
+                        <form class="d-inline-block" method="post"
+                              action="{{ route('posts.delete',['id'=>$post->id])}}">
+                            @csrf
+                            @method('delete')
 
-                    <form class="d-inline-block" method="post" action="{{ route('posts.delete',['id'=>$post->id])}}">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" class="btn btn-danger"
-                               onclick="return confirm('Are you sure?')"
-                               value="Delete">
-                        {{--                        <input name="postId" type="hidden" value="{{$post->id}}">--}}
-                    </form>
-                </td>
-            </tr>
-        @endforeach
+                            <input type="submit" class="btn btn-danger"
+                                   onclick="return confirm('Are you sure?')"
+                                   value="Delete">
+                        </form>
+            @else
+                <tr>
+                    <td class="text-center font-weight-bold"  colspan="4">Post has been Deleted</td>
+                    <td>
+                        <form class="d-inline-block" method="post"
+                              action="{{ route('posts.retrieve',['id'=>$post->id])}}">
+                            @csrf
+                            <input type="submit" class="btn btn-warning"
+                                   onclick="return confirm('Are you sure?')"
+                                   value="Rollback">
+                        </form>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
 
         </tbody>
     </table>

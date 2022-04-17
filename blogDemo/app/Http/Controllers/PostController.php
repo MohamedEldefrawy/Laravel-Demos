@@ -15,18 +15,15 @@ class PostController extends Controller
 
     public function index(): Factory|View|Application
     {
-        $posts = Post::paginate(10);
-//        $posts = Post::where('isDeleted', false)->get();
+        $posts = Post::withTrashed()
+            ->paginate(10);
         return view('posts.index', ["posts" => $posts]);
     }
 
     public function rollback(): RedirectResponse
     {
-        $deletedPosts = Post::all();
-        foreach ($deletedPosts as $post) {
-            $post->isDeleted = false;
-            $post->save();
-        }
+        $postId = request()->route()->id;
+        $selectedPost = Post::where('id', $postId)->restore();
         return to_route('posts.index');
     }
 
@@ -75,8 +72,9 @@ class PostController extends Controller
     public function delete(): RedirectResponse
     {
         $postId = request()->route()->id;
-        dd($postId);
-//        $post = Post::where('id', $postId["postId"])->first();
+        $selectedPost = Post::where('id', $postId)->first();
+        $selectedPost->delete();
+        $selectedPost->save();
         return to_route('posts.index');
     }
 }

@@ -20,7 +20,6 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'created_at' => Str::random(50),
             'user_id' => $this->faker->numberBetween(1, 10)
         ];
     }
