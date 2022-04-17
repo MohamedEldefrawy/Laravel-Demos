@@ -6,6 +6,12 @@
     <div class="text-center">
         <a href="{{ route('posts.create') }}" class="mt-4 btn btn-success">Create Post</a>
     </div>
+    <form class="align-self-end" method="post" action="{{ route('posts.retrieve') }}">
+        @csrf
+        <input type="submit" class="btn btn-warning"
+               onclick="return confirm('Are you sure?')"
+               value="Rollback">
+    </form>
     <table class="table mt-4">
         <thead>
         <tr>

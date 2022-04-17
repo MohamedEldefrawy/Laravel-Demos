@@ -19,6 +19,16 @@ class PostController extends Controller
         return view('posts.index', ["posts" => $posts]);
     }
 
+    public function rollback(): RedirectResponse
+    {
+        $deletedPosts = Post::where('isDeleted', true)->get();
+        foreach ($deletedPosts as $post) {
+            $post->isDeleted = false;
+            $post->save();
+        }
+        return to_route('posts.index');
+    }
+
     public function create(): Factory|View|Application
     {
         $users = User::all();
