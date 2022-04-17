@@ -26,7 +26,13 @@
                 <td>
                     <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
                     <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
+
+                    <form class="d-inline-block" method="post" action="{{ route('posts.delete',['id'=>$post->id])}}">
+                        @csrf
+                        @method("delete")
+                        <input type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"
+                               value="Delete">
+                    </form>
                 </td>
             </tr>
         @endforeach

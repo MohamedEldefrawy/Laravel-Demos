@@ -15,11 +15,11 @@ class PostController extends Controller
 
     public function index(): Factory|View|Application
     {
-        $posts = Post::all();
+        $posts = Post::where('isDeleted', false)->get();
         return view('posts.index', ["posts" => $posts]);
     }
 
-    public function create()
+    public function create(): Factory|View|Application
     {
         $users = User::all();
         return view('posts.create', ["users" => $users]);
@@ -37,20 +37,20 @@ class PostController extends Controller
         return to_route('posts.index');
     }
 
-    public function edit($postId)
+    public function edit($postId): Factory|View|Application
     {
-        $post = Post::where('id', $postId)->first();
+        $post = Post::where('id', $postId)->where('isDeleted', false)->first();
         $users = User::all();
         return view('posts.edit', ['post' => $post, 'users' => $users]);
     }
 
-    public function show($postId)
+    public function show($postId): Factory|View|Application
     {
         $post = Post::where('id', $postId)->first();
         return view('posts.show', ["post" => $post]);
     }
 
-    public function update()
+    public function update(): RedirectResponse
     {
         $newData = request()->all();
         $post = Post::find($newData["post"]);
@@ -58,6 +58,13 @@ class PostController extends Controller
         $post->description = $newData["description"];
         $post->user_id = $newData["userId"];
         $post->save();
+        return to_route('posts.index');
+    }
+
+    public function delete(): RedirectResponse
+    {
+        $selectedPost = request()->all();
+        dd($selectedPost);
         return to_route('posts.index');
     }
 }
