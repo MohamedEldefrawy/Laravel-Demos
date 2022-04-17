@@ -63,8 +63,10 @@ class PostController extends Controller
 
     public function delete(): RedirectResponse
     {
-        $selectedPost = request()->all();
-        dd($selectedPost);
+        $postId = request()->all();
+        $post = Post::where('id', $postId["postId"])->where('isDeleted', false)->first();
+        $post->isDeleted = true;
+        $post->save();
         return to_route('posts.index');
     }
 }
