@@ -42,7 +42,6 @@ class PostController extends Controller
     public function edit($postId)
     {
         $post = Post::where('id', $postId)->first();
-//        dd($post->user_id);
         $users = User::all();
         return view('posts.edit', ['post' => $post, 'users' => $users]);
     }
@@ -56,8 +55,13 @@ class PostController extends Controller
 
     public function update()
     {
-        $posts = $this->getPosts();
-        return view('posts.index', ["posts" => $posts]);
+        $newData = request()->all();
+        $post = Post::find($newData["post"]);
+        $post->title = $newData["title"];
+        $post->description = $newData["description"];
+        $post->user_id = $newData["userId"];
+        $post->save();
+//        dd($newData["userId"]);
+        return to_route('posts.index');
     }
-
 }
