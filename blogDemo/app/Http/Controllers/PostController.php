@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -23,7 +24,8 @@ class PostController extends Controller
     public function create()
     {
 
-        return view('posts.create');
+        $users = User::all();
+        return view('posts.create', ["users" => $users]);
     }
 
     public function store(): RedirectResponse
