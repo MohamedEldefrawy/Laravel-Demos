@@ -15,7 +15,8 @@ class PostController extends Controller
 
     public function index(): Factory|View|Application
     {
-        $posts = Post::where('isDeleted', false)->get();
+        $posts = Post::paginate(10);
+//        $posts = Post::where('isDeleted', false)->get();
         return view('posts.index', ["posts" => $posts]);
     }
 
