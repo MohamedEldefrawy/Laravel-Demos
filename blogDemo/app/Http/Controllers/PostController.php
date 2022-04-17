@@ -23,7 +23,6 @@ class PostController extends Controller
 
     public function create()
     {
-
         $users = User::all();
         return view('posts.create', ["users" => $users]);
     }
@@ -37,7 +36,6 @@ class PostController extends Controller
             'description' => $formData['description'],
             'email' => $formData['email'],
         ]);
-
         return to_route('posts.index');
     }
 
