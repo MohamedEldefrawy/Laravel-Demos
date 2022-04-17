@@ -8,8 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 
 class PostController extends Controller
@@ -48,9 +46,8 @@ class PostController extends Controller
 
     public function show($postId)
     {
-        $posts = $this->getPosts();
-
-        return view('posts.show', ["post" => $posts[$postId - 1]]);
+        $post = Post::where('id', $postId)->first();
+        return view('posts.show', ["post" => $post]);
     }
 
     public function update()
@@ -61,7 +58,6 @@ class PostController extends Controller
         $post->description = $newData["description"];
         $post->user_id = $newData["userId"];
         $post->save();
-//        dd($newData["userId"]);
         return to_route('posts.index');
     }
 }

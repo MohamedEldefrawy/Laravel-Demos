@@ -7,10 +7,10 @@
         </div>
         <div class="card-body">
             <div>
-                <span style="font-size: 1.2rem; font-weight: bold">Title: &nbsp;</span>{{$post["Title"]}}
+                <span style="font-size: 1.2rem; font-weight: bold">Title: &nbsp;</span>{{$post->title}}
             </div>
             <div>
-                <span style="font-size: 1rem; font-weight: bold">Name: &nbsp;</span>{{$post["Description"]}}
+                <span style="font-size: 1rem; font-weight: bold">Name: &nbsp;</span>{{$post->description}}
             </div>
         </div>
     </div>
@@ -21,13 +21,13 @@
         </div>
         <div class="card-body">
             <div>
-                <span style="font-size: 1.2rem; font-weight: bold">Name: &nbsp;</span>{{$post["Name"]}}
+                <span style="font-size: 1.2rem; font-weight: bold">Name: &nbsp;</span>{{$post->user->name}}
             </div>
             <div>
-                <span style="font-size: 1.2rem; font-weight: bold">Email: &nbsp;</span>{{$post["Email"]}}
+                <span style="font-size: 1.2rem; font-weight: bold">Email: &nbsp;</span>{{$post->email}}
             </div>
             <div>
-                <span style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{$post["Created At"]}}
+                <span style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{$post->created_at}}
             </div>
         </div>
     </div>
