@@ -6,21 +6,24 @@
     <form method="POST" action="{{ route('posts.store')}}">
         @csrf
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Title</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+            <label for="Title" class="form-label">Title</label>
+            <input name="title" type="text" class="form-control" id="Title" placeholder="">
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="Email" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" id="Email" placeholder="">
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="Description" rows="3"></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">
+            <label for="Name" class="form-label">
                 Post Creator
-                <select class="form-control">
+                <select name="name" id="Name" class="form-control">
                     <option value="1">Ahmed</option>
                     <option value="2">Mohamed</option>
-
                 </select>
             </label>
         </div>

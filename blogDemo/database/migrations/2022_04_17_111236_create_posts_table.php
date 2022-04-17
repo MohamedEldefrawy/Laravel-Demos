@@ -7,14 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable(false);
+            $table->id();
             $table->string('title')->nullable(false);
             $table->string('email')->nullable(false);
             $table->text('description')->nullable(true);
