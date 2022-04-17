@@ -22,7 +22,7 @@ class PostController extends Controller
 
     public function rollback(): RedirectResponse
     {
-        $deletedPosts = Post::where('isDeleted', true)->get();
+        $deletedPosts = Post::all();
         foreach ($deletedPosts as $post) {
             $post->isDeleted = false;
             $post->save();
@@ -50,7 +50,7 @@ class PostController extends Controller
 
     public function edit($postId): Factory|View|Application
     {
-        $post = Post::where('id', $postId)->where('isDeleted', false)->first();
+        $post = Post::where('id', $postId)->first();
         $users = User::all();
         return view('posts.edit', ['post' => $post, 'users' => $users]);
     }
@@ -74,10 +74,9 @@ class PostController extends Controller
 
     public function delete(): RedirectResponse
     {
-        $postId = request()->all();
-        $post = Post::where('id', $postId["postId"])->where('isDeleted', false)->first();
-        $post->isDeleted = true;
-        $post->save();
+        $postId = request()->route()->id;
+        dd($postId);
+//        $post = Post::where('id', $postId["postId"])->first();
         return to_route('posts.index');
     }
 }
