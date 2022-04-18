@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
-@section('title')Index @endsection
+@section('title')
+    Index
+@endsection
 
 @section('content')
     <div class="text-center">
-        <a href="{{ route('posts.create') }}" class="mt-4 btn btn-success">Create Post</a>
+        <a href="{{ route('posts.create') }}" class="mt-4 btn btn-success"><i class="bi bi-plus-circle"></i></a>
     </div>
     <table class="table mt-4">
         <thead>
@@ -25,16 +27,19 @@
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->created_at->format('Y-m-d h:iA') }}</td>
                     <td>
-                        <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
-                        <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info"><i
+                                class="bi bi-binoculars"></i></a>
+                        <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary"><i
+                                class="bi bi-pencil-square"></i></a>
                         <form class="d-inline-block" method="post"
                               action="{{ route('posts.delete',['id'=>$post->id])}}">
                             @csrf
                             @method('delete')
 
-                            <input type="submit" class="btn btn-danger"
-                                   onclick="return confirm('Are you sure?')"
-                                   value="Delete">
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure?')">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
             @else
                 <tr>
@@ -43,9 +48,9 @@
                         <form class="d-inline-block align-items-center" method="post"
                               action="{{ route('posts.retrieve',['id'=>$post->id])}}">
                             @csrf
-                            <input type="submit" class="btn btn-warning"
-                                   onclick="return confirm('Are you sure?')"
-                                   value="Rollback">
+                            <BUTTON type="submit" class="btn btn-warning"
+                                    onclick="return confirm('Are you sure?')"
+                            ><i class="bi bi-arrow-clockwise"></i></BUTTON>
                         </form>
                         @endif
                     </td>
