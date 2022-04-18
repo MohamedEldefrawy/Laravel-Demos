@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostCreateView implements Responsable
+class PostViewResponse implements Responsable
 {
     public array $props;
     private $postId;
