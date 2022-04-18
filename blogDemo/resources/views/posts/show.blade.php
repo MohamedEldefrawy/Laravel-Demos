@@ -38,7 +38,7 @@
     <section id="comments" class="d-flex flex-column" style="gap: 2rem;">
         @foreach($post->comments as $comment)
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: antiquewhite">
                     <div>
                         <span style="font-size: 1.2rem; font-weight: bold">Name: &nbsp;</span>{{$comment->user->name}}
                     </div>
