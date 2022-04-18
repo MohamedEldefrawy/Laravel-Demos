@@ -28,3 +28,6 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 Route::delete('/posts/delete/{id}', [PostController::class, 'delete'])->name('posts.delete');
 Route::post('/posts/retrieve/{id}', [PostController::class, 'rollback'])->name('posts.retrieve');
 Route::post('/comments', [CommentController::class, 'create'])->name('comment.create');
+Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comment.delete');
+Route::post('/comments/retrieve/{id}', [CommentController::class, 'rollback'])->name('comment.retrieve');
+

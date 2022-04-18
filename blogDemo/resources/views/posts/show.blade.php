@@ -41,16 +41,16 @@
                 <div class="card">
                     <div class="card-header" style="background-color: antiquewhite">
                         <div>
-                            <span
-                                style="font-size: 1.2rem; font-weight: bold">Name: &nbsp;</span>{{$comment->user->name}}
+                        <span
+                            style="font-size: 1.2rem; font-weight: bold">Name: &nbsp;</span>{{$comment->user->name}}
                         </div>
                         <div>
-                            <span
-                                style="font-size: 1.2rem; font-weight: bold">Email: &nbsp;</span>{{$comment->user->email}}
+                        <span
+                            style="font-size: 1.2rem; font-weight: bold">Email: &nbsp;</span>{{$comment->user->email}}
                         </div>
                         <div>
-                <span
-                    style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{ $comment->created_at->format('Y-m-d h:iA') }}
+            <span
+                style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{ $comment->created_at->format('Y-m-d h:iA') }}
                         </div>
                     </div>
                     <div class="card-body">
@@ -59,19 +59,28 @@
                     <div class="align-self-end ml-0 p-3">
                         <button class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                         </button>
-                        <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                        <form class="d-inline-block" method="post"
+                              action="{{ route('comment.delete',['id'=>$comment->id])}}">
+                            @csrf
+                            @method('delete')
+                            <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger"><i
+                                    class="bi bi-trash"></i></button>
+                            <input name="postId" type="hidden" value="{{$post->id}}">
+                        </form>
                     </div>
                 </div>
             @else
-                <div class="card">
-                    <div class="card-header" style="background-color: #de9a43">
+                <form method="POST" action="{{ route('comment.retrieve')}}">
+                    <div class="card">
+                        <div class="card-header" style="background-color: #de9a43">
 
-                        <strong>Comment has been Deleted</strong>
-                        <span
-                            style="font-size: 1.2rem; font-weight: bold">Deleted At: &nbsp;</span>{{ $comment->deleted_at->format('Y-m-d h:iA') }}
+                            <strong>Comment has been Deleted</strong>
+                            <span
+                                style="font-size: 1.2rem; font-weight: bold">Deleted At: &nbsp;</span>{{ $comment->deleted_at->format('Y-m-d h:iA') }}
+                        </div>
+                        <button class="btn btn-warning"><i class="bi bi-arrow-clockwise"></i></button>
                     </div>
-                    <button class="btn btn-warning"><i class="bi bi-arrow-clockwise"></i></button>
-                </div>
+                </form>
             @endif
         @endforeach
     </section>

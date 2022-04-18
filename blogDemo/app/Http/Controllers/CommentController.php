@@ -21,4 +21,16 @@ class CommentController extends Controller
         ]);
         return to_route('posts.show', ["post" => $selectedPost, 'users' => $users]);
     }
+
+    public function delete(): RedirectResponse
+    {
+        $commentId = request()->route()->id;
+        $postId = request()->all()["postId"];
+        $selectedPost = Post::where('id', $postId)->first();
+        $users = User::all();
+        $selectedComment = Comment::where('id', $commentId)->first();
+        $selectedComment->delete();
+        $selectedComment->save();
+        return to_route('posts.show', ["post" => $selectedPost, 'users' => $users]);
+    }
 }
