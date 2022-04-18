@@ -55,7 +55,8 @@ class PostController extends Controller
     public function show($postId): Factory|View|Application
     {
         $post = Post::where('id', $postId)->first();
-        return view('posts.show', ["post" => $post]);
+        $users = User::all();
+        return view('posts.show', ["post" => $post, 'users' => $users]);
     }
 
     public function update(): RedirectResponse

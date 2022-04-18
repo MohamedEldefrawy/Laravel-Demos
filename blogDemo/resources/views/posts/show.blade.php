@@ -63,26 +63,23 @@
     </section>
     <hr>
     <section id="createComment">
-        <form method="POST" action="{{ route('posts.store')}}">
+        <form method="POST" action="{{ route('comment.create')}}">
             @csrf
             <div class="mb-3">
-                <label for="Email" class="form-label">Email</label>
-                <input name="email" type="email" class="form-control" id="Email" placeholder="">
-            </div>
-            <div class="mb-3">
-                <label for="Name" class="form-label">
+                <label for="UserId" class="form-label">
                     Comment Creator
-                    <select name="name" id="Name" class="form-control">
-                        {{--                        @foreach ($users as $user)--}}
-                        {{--                            <option value="{{$user->id}}">{{$user->name}}</option>--}}
-                        {{--                        @endforeach--}}
+                    <select name="userId" id="UserId" class="form-control">
+                        @foreach ($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
                     </select>
                 </label>
             </div>
             <div class="mb-3">
-                <label for="Description" class="form-label">Comment</label>
-                <textarea name="description" class="form-control" id="Description" rows="3"></textarea>
+                <label for="Comment" class="form-label">Comment</label>
+                <textarea name="comment" class="form-control" id="Comment" rows="3"></textarea>
             </div>
+            <input name="commentable_id" type="hidden" value="{{$post->id}}">
 
             <button class="btn btn-success">Create</button>
         </form>

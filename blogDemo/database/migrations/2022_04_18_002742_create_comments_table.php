@@ -10,7 +10,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_Id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer("commentable_id");
-            $table->string("commentable_type");
+            $table->string("commentable_type")->default("app\\\Models\\\Post");
         });
     }
 };
