@@ -23,7 +23,7 @@
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->user->name }}</td>
-                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->created_at->format('Y-m-d h:iA') }}</td>
                     <td>
                         <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
                         <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
@@ -38,9 +38,9 @@
                         </form>
             @else
                 <tr>
-                    <td class="text-center font-weight-bold"  colspan="4">Post has been Deleted</td>
+                    <td class="text-center font-weight-bold" colspan="4">Post has been Deleted</td>
                     <td>
-                        <form class="d-inline-block" method="post"
+                        <form class="d-inline-block align-items-center" method="post"
                               action="{{ route('posts.retrieve',['id'=>$post->id])}}">
                             @csrf
                             <input type="submit" class="btn btn-warning"

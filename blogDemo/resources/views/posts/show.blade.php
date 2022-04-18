@@ -27,7 +27,8 @@
                 <span style="font-size: 1.2rem; font-weight: bold">Email: &nbsp;</span>{{$post->email}}
             </div>
             <div>
-                <span style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{$post->created_at}}
+                <span
+                    style="font-size: 1.2rem; font-weight: bold">Created At: &nbsp;</span>{{ $post->created_at->format('Y-m-d h:iA') }}
             </div>
         </div>
     </div>
