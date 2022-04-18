@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\PostCreateView;
 use App\Models\Post;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -52,11 +54,11 @@ class PostController extends Controller
         return view('posts.edit', ['post' => $post, 'users' => $users]);
     }
 
-    public function show($postId): Factory|View|Application
+    public function show($postId): PostCreateView
     {
         $post = Post::where('id', $postId)->first();
         $users = User::all();
-        return view('posts.show', ["post" => $post, 'users' => $users]);
+        return new PostCreateView([], $postId);
     }
 
     public function update(): RedirectResponse
