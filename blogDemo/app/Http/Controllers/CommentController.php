@@ -33,4 +33,15 @@ class CommentController extends Controller
         $selectedComment->save();
         return to_route('posts.show', ["post" => $selectedPost, 'users' => $users]);
     }
+
+    public function rollback(): RedirectResponse
+    {
+        $commentId = request()->route()->id;
+        $postId = request()->all()["postId"];
+        $selectedPost = Comment::where('id', $postId)->first();
+        $users = User::all();
+        Comment::where('id', $commentId)->restore();
+        return to_route('posts.show', ["post" => $selectedPost, 'users' => $users]);
+    }
+
 }

@@ -36,7 +36,7 @@
 
     <h2>Comments</h2>
     <section id="comments" class="d-flex flex-column" style="gap: 2rem;">
-        @foreach($post->comments as $comment)
+        @foreach(\App\Models\Comment::withTrashed()->where('commentable_id',$post->id)->get() as $comment)
             @if(!$comment->trashed())
                 <div class="card">
                     <div class="card-header" style="background-color: antiquewhite">
@@ -70,7 +70,8 @@
                     </div>
                 </div>
             @else
-                <form method="POST" action="{{ route('comment.retrieve')}}">
+                <form method="POST" action="{{ route('comment.retrieve',['id'=>$comment->id])}}">
+                    @csrf
                     <div class="card">
                         <div class="card-header" style="background-color: #de9a43">
 
@@ -79,6 +80,7 @@
                                 style="font-size: 1.2rem; font-weight: bold">Deleted At: &nbsp;</span>{{ $comment->deleted_at->format('Y-m-d h:iA') }}
                         </div>
                         <button class="btn btn-warning"><i class="bi bi-arrow-clockwise"></i></button>
+                        <input name="postId" type="hidden" value="{{$post->id}}">
                     </div>
                 </form>
             @endif
