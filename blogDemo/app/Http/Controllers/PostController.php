@@ -62,8 +62,9 @@ class PostController extends Controller
         return new PostViewResponse([], $postId);
     }
 
-    public function update(): RedirectResponse
+    public function update(CreatePostRequest $request): RedirectResponse
     {
+        $request->validated();
         $newData = request()->all();
         $post = Post::find($newData["post"]);
         $post->title = $newData["title"];
