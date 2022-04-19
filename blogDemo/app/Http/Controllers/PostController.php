@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Http\Responses\PostViewResponse;
 use App\Models\Post;
 use App\Models\User;
@@ -34,8 +35,9 @@ class PostController extends Controller
         return view('posts.create', ["users" => $users]);
     }
 
-    public function store(): RedirectResponse
+    public function store(CreatePostRequest $request): RedirectResponse
     {
+        $validate = $request->validate();
         $formData = request()->all();
         Post::create([
             'title' => $formData['title'],

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title')Create @endsection
+@section('title')
+    Create
+@endsection
 
 @section('content')
     <form method="POST" action="{{ route('posts.store')}}">
@@ -30,5 +32,12 @@
         </div>
 
         <button class="btn btn-success">Create</button>
+        @if($errors->any())
+            <div class="m-auto text-center">
+                @foreach($errors->all() as $error)
+                    <li style="color: red;list-style: none"><strong>{{$error}}</strong></li>
+                @endforeach
+            </div>
+        @endif
     </form>
 @endsection
