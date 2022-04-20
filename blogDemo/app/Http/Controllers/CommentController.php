@@ -12,8 +12,6 @@ class CommentController extends Controller
     public function create(): PostViewResponse
     {
         $comment = request()->all();
-        $selectedPost = Post::where('id', $comment["commentable_id"])->first();
-        $users = User::all();
         Comment::create([
             'comment' => $comment["comment"],
             'user_Id' => $comment["userId"],
@@ -26,23 +24,30 @@ class CommentController extends Controller
     {
         $commentId = request()->route()->id;
         $postId = request()->all()["postId"];
-        $selectedPost = Post::where('id', $postId)->first();
-        $users = User::all();
         $selectedComment = Comment::where('id', $commentId)->first();
         $selectedComment->delete();
         $selectedComment->save();
         return new PostViewResponse([], $postId);
-
     }
 
     public function rollback(): PostViewResponse
     {
         $commentId = request()->route()->id;
         $postId = request()->all()["postId"];
-        $selectedPost = Comment::where('id', $postId)->first();
-        $users = User::all();
         Comment::where('id', $commentId)->restore();
         return new PostViewResponse([], $postId);
+    }
+
+    public function update()
+    {
+        $commentId = request()->route()->id;
+        $formData = request()->all();
+        $selectedComment = Comment::findOrFail($commentId);
+        $selectedComment->update([
+            'user_Id' => $formData["userId"],
+            'comment' => $formData["comment"]
+        ]);
+        return new PostViewResponse([], $selectedComment->commentable_id);
     }
 
 }

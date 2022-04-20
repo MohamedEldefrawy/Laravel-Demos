@@ -57,8 +57,13 @@
                         {{$comment->comment}}
                     </div>
                     <div class="align-self-end ml-0 p-3">
-                        <button class="btn btn-primary"><i class="bi bi-pencil-square"></i>
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#editModal{{$comment->id}}" data-bs-whatever="@mdo">
+                            <i class="bi bi-pencil-square"></i>
                         </button>
+                        @include('includes.update-comment-modal')
+
                         <form class="d-inline-block" method="post"
                               action="{{ route('comment.delete',['id'=>$comment->id])}}">
                             @csrf

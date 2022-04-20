@@ -30,4 +30,9 @@ Route::post('/posts/retrieve/{id}', [PostController::class, 'rollback'])->name('
 Route::post('/comments', [CommentController::class, 'create'])->name('comment.create');
 Route::delete('/comments/delete/{id}', [CommentController::class, 'delete'])->name('comment.delete');
 Route::post('/comments/retrieve/{id}', [CommentController::class, 'rollback'])->name('comment.retrieve');
+Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comment.update');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
