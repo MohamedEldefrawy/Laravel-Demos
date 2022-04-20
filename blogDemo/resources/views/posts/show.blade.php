@@ -70,7 +70,6 @@
                             @method('delete')
                             <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger"><i
                                     class="bi bi-trash"></i></button>
-                            <input name="postId" type="hidden" value="{{$post->id}}">
                         </form>
                     </div>
                 </div>
@@ -85,7 +84,6 @@
                                 style="font-size: 1.2rem; font-weight: bold">Deleted At: &nbsp;</span>{{ $comment->deleted_at->format('Y-m-d h:iA') }}
                         </div>
                         <button class="btn btn-warning"><i class="bi bi-arrow-clockwise"></i></button>
-                        <input name="postId" type="hidden" value="{{$post->id}}">
                     </div>
                 </form>
             @endif
@@ -93,7 +91,7 @@
     </section>
     <hr>
     <section id="createComment">
-        <form method="POST" action="{{ route('comment.create')}}">
+        <form method="POST" action="{{ route('comment.create',['id'=>$post->id])}}">
             @csrf
             <div class="mb-3">
                 <label for="UserId" class="form-label">
@@ -113,7 +111,6 @@
                     </div>
                     <div class="col-2">
                         <button class="btn btn-success"><i class="bi bi-plus-circle"></i></button>
-                        <input name="commentable_id" type="hidden" value="{{$post->id}}">
                     </div>
                 </div>
             </section>

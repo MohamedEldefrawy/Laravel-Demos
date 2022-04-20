@@ -15,34 +15,33 @@ class CommentController extends Controller
         Comment::create([
             'comment' => $comment["comment"],
             'user_Id' => $comment["userId"],
-            'commentable_id' => $comment["commentable_id"]
+            'commentable_id' => request()->route()->id
         ]);
-        return new PostViewResponse([], $comment["commentable_id"]);
+        return new PostViewResponse([], request()->route()->id);
     }
 
     public function delete(): PostViewResponse
     {
         $commentId = request()->route()->id;
-        $postId = request()->all()["postId"];
-        $selectedComment = Comment::where('id', $commentId)->first();
+        $selectedComment = Comment::withTrashed()->findOrFail($commentId);
         $selectedComment->delete();
         $selectedComment->save();
-        return new PostViewResponse([], $postId);
+        return new PostViewResponse([], $selectedComment->commentable_id);
     }
 
     public function rollback(): PostViewResponse
     {
         $commentId = request()->route()->id;
-        $postId = request()->all()["postId"];
-        Comment::where('id', $commentId)->restore();
-        return new PostViewResponse([], $postId);
+        $selectedComment = Comment::withTrashed()->findOrFail($commentId);
+        $selectedComment->restore();
+        return new PostViewResponse([], $selectedComment->commentable_id);
     }
 
     public function update()
     {
         $commentId = request()->route()->id;
         $formData = request()->all();
-        $selectedComment = Comment::findOrFail($commentId);
+        $selectedComment = Comment::withTrashed()->findOrFail($commentId);
         $selectedComment->update([
             'user_Id' => $formData["userId"],
             'comment' => $formData["comment"]
