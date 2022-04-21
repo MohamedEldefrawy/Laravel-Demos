@@ -110,10 +110,14 @@
                         <textarea name="comment" class="form-control" id="Comment" rows="3"></textarea>
                     </div>
                     <div class="col-2">
-                        <button class="btn btn-success"><i class="bi bi-plus-circle"></i></button>
+                        <button id="btnComment" class="btn btn-success"><i class="bi bi-plus-circle"></i></button>
                     </div>
                 </div>
             </section>
         </form>
     </section>
+    <script src="{{asset('/js/showComment.js')}}">
+
+    </script>
+
 @endsection
