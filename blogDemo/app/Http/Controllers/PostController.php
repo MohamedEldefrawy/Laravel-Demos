@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Responses\PostViewResponse;
+use App\Jobs\PruneOldPostsJob;
 use App\Models\Post;
 use App\Models\User;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -20,6 +21,7 @@ class PostController extends Controller
     {
         $posts = Post::withTrashed()
             ->paginate(10);
+        $this->dispatch(new PruneOldPostsJob(Post::withTrashed()->get()));
         return view('posts.index', ["posts" => $posts]);
     }
 
