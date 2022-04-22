@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,8 +11,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+
     use HasFactory;
     use SoftDeletes;
+    use Sluggable;
 
     protected $table = 'posts';
 
@@ -21,6 +24,15 @@ class Post extends Model
         'email',
         'description'
     ];
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 
     protected $casts = [
         'created_at' => 'datetime',
@@ -35,4 +47,5 @@ class Post extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
 }
