@@ -14,6 +14,10 @@
                    value="{{$post->title}}">
         </div>
         <div class="mb-3">
+            <label for="Slug" class="form-label">Slug</label>
+            <input name="slug" type="text" class="form-control" id="Slug" placeholder="">
+        </div>
+        <div class="mb-3">
             <label for="Description" class="form-label">Description</label>
             <textarea name="description" class="form-control" id="Description"
                       rows="3">{{$post->description}}</textarea>
@@ -43,4 +47,20 @@
             </div>
         @endif
     </form>
+    <script>
+        document.getElementById('Title').addEventListener('change', (event) => {
+            let url = "{{route('posts.checkSlug')}}" + "?title=" + event.target.value;
+            console.log(url.replace('%7D', ''));
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('#csrf').getAttribute('content')
+                },
+            }).then(response => response.json())
+                .then(data => {
+                    document.getElementById('Slug').value = data.slug;
+                });
+        });
+    </script>
 @endsection
