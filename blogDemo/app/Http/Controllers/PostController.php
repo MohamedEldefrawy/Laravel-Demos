@@ -72,7 +72,6 @@ class PostController extends Controller
         $newData = request()->all();
         $post = Post::find($newData["post"]);
         $post->title = $newData["title"];
-        $post->slug = $newData["slug"];
         $post->description = $newData["description"];
         $post->user_id = $newData["userId"];
         $post->save();

@@ -32,7 +32,7 @@ class CreatePostRequest extends FormRequest
                 Rule::unique('posts', 'title')->ignore($this->post)
             ],
             'description' => 'required|min:10',
-            'id' => 'exist:posts,id'
+            'userId' => 'exists:users,id'
         ];
     }
 }
