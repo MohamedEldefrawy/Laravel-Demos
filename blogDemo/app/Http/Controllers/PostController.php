@@ -70,10 +70,11 @@ class PostController extends Controller
     {
         $request->validated();
         $newData = request()->all();
-        $post = Post::find($newData["id"]);
+        $post = Post::find($newData["post"]);
         $post->title = $newData["title"];
         $post->description = $newData["description"];
         $post->user_id = $newData["userId"];
+        $post->slug = $newData["slug"];
         $post->save();
         return to_route('posts.index');
     }
@@ -83,7 +84,6 @@ class PostController extends Controller
         $postId = request()->route()->id;
         $selectedPost = Post::where('id', $postId)->first();
         $selectedPost->delete();
-        $selectedPost->save();
         return to_route('posts.index');
     }
 

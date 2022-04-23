@@ -35,8 +35,8 @@ class PruneOldPostsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $postService = new PostsWorkers();
-        $postService->setPosts($this->post);
-        $postService->pruneDeletedPosts();
+        $postWorker = new PostsWorkers();
+        $postWorker->setPosts($this->post);
+        $postWorker->pruneDeletedPosts();
     }
 }
