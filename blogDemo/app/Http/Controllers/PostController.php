@@ -40,7 +40,7 @@ class PostController extends Controller
 
     public function store(CreatePostRequest $request): RedirectResponse
     {
-        $validate = $request->validated();
+        $request->validated();
         $formData = request()->all();
         Post::create([
             'title' => $formData['title'],
@@ -70,7 +70,7 @@ class PostController extends Controller
     {
         $request->validated();
         $newData = request()->all();
-        $post = Post::find($newData["post"]);
+        $post = Post::find($newData["id"]);
         $post->title = $newData["title"];
         $post->description = $newData["description"];
         $post->user_id = $newData["userId"];
