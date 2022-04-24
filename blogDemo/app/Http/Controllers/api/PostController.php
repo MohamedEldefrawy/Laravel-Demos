@@ -16,8 +16,8 @@ class PostController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $posts = Post::withTrashed()->with('comments')
-            ->paginate(10);
+        $posts = Post::withTrashed()
+            ->paginate(10)->load('comments');
         $this->dispatch(new PruneOldPostsJob(Post::withTrashed()->get()));
         return GetAllPostResource::Collection($posts);
     }
@@ -78,6 +78,5 @@ class PostController extends Controller
         $response->message = "Post has been updated";
         $response->status = true;
         return new JsonResource($response);
-
     }
 }

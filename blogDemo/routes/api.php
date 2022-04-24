@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +48,3 @@ Route::post('/sanctum/token', function (Request $request) {
 
     return $user->createToken($request->email)->plainTextToken;
 });
-
-

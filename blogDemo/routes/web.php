@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\GithubController;
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('social-auth/{provider}', [SocialLoginController::class, 'redirectToProvider'])->name('social.redirect');
+Route::get('social-auth/{provider}/callback', [SocialLoginController::class, 'providerCallback']);
 
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -34,4 +38,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comments/retrieve/{id}', [CommentController::class, 'rollback'])->name('comment.retrieve');
     Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comment.update');
 });
+
 Auth::routes();
