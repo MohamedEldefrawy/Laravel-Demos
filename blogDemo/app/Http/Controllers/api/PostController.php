@@ -4,79 +4,80 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePostRequest;
-use App\Http\Resources\JsonResource;
+use App\Http\Resources\GeneralResource;
 use App\Http\Resources\GetAllPostResource;
 use App\Http\Resources\PostResource;
-use App\Jobs\PruneOldPostsJob;
-use App\Models\BooleanResponse;
-use App\Models\Post;
+use App\Repositories\IPostRepository;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use function PHPUnit\Framework\isNull;
 
 class PostController extends Controller
 {
+
+
+    private PostRepository $postRepository;
+
+    public function __construct(IPostRepository $postRepository)
+    {
+
+        $this->postRepository = $postRepository;
+    }
+
     public function index(): AnonymousResourceCollection
     {
-        $posts = Post::withTrashed()
-            ->paginate(10)->load('comments');
-        $this->dispatch(new PruneOldPostsJob(Post::withTrashed()->get()));
+        $posts = $this->postRepository->all();
         return GetAllPostResource::Collection($posts);
     }
 
-    public function show(): PostResource
+    public function show(): PostResource|GeneralResource
     {
         $postId = request()->route()->id;
-        return new PostResource(Post::withTrashed()->with('comments')->find($postId));
+        $selectedPost = $this->postRepository->findById($postId);
+        if (isNull($selectedPost))
+
+            return new GeneralResource(["message" => "couldn't find Post",
+                "status" => false]);
+
+        return new PostResource($selectedPost);
     }
 
     public function store(CreatePostRequest $request): PostResource
     {
         $body = request()->all();
-
-        return new PostResource(Post::create([
+        $newPost = [
             'title' => $body['title'],
             'user_id' => $body['user_id'],
             'description' => $body['description'],
             'email' => $body['email'],
-        ]));
+        ];
+
+        $result = $this->postRepository->create($newPost);
+
+        return new PostResource($result);
     }
 
-    public function delete()
+    public function delete(): GeneralResource
     {
         $postId = request()->route()->id;
-        $post = Post::withTrashed()->find($postId);
-        if ($post == null) {
-            $response = new BooleanResponse();
-            $response->message = "couldn't find Post";
-            $response->status = false;
-            return new JsonResource($response);
-        }
-        $result = $post->forceDelete();
-        if ($result == 1) {
-            $response = new BooleanResponse();
-            $response->message = "Post has been deleted";
-            $response->status = true;
-            return new JsonResource($response);
-        }
+        $result = $this->postRepository->delete($postId);
+        return new GeneralResource($result);
     }
 
-    public function update(CreatePostRequest $request): JsonResource
+    public function update(CreatePostRequest $request): GeneralResource
     {
         $postId = request()->route()->id;
+        $request->validated();
         $newData = request()->all();
-        $post = Post::find($postId);
-        if ($post == null) {
-            $response = new BooleanResponse();
-            $response->message = "couldn't find Post";
-            $response->status = false;
-            return new JsonResource($response);
-        }
-        $post->title = $newData["title"];
-        $post->description = $newData["description"];
-        $post->user_id = $newData["userId"];
-        $result = $post->save();
-        $response = new BooleanResponse();
-        $response->message = "Post has been updated";
-        $response->status = true;
-        return new JsonResource($response);
+
+        $newPost = [
+            'id' => $postId,
+            'title' => $newData["title"],
+            'description' => $newData['description'],
+            'userId' => $newData["userId"]
+        ];
+
+        $updatedPost = $this->postRepository->update($newPost);
+        return new GeneralResource($updatedPost);
     }
 }
