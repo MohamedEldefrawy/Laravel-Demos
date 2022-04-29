@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\IPostRepository;
+use App\Contracts\IBaseRepository;
+use App\Contracts\IPostRepository;
+use App\Repositories\BaseRepository;
 use App\Repositories\PostRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,7 +27,7 @@ class RepositoriesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         $this->app->bind(IPostRepository::class, PostRepository::class);
+        $this->app->bind(IBaseRepository::class, BaseRepository::class);
     }
 }
